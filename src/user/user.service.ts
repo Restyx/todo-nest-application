@@ -18,14 +18,14 @@ export class UserService {
       .values(createUserDto)
       .returning('*')
       .execute()
-      .catch((err) => {
+      .catch(() => {
         throw new HttpException(
           'username already in use',
           HttpStatus.BAD_REQUEST,
         );
       });
 
-    return this.userRepository.create(queryResult.raw[0] as Object);
+    return this.userRepository.create(queryResult.raw[0] as object);
   }
 
   async getAll(): Promise<User[]> {
@@ -37,7 +37,7 @@ export class UserService {
       .createQueryBuilder('users')
       .where('user.id = :id', { id })
       .getOneOrFail()
-      .catch((err) => {
+      .catch(() => {
         throw new HttpException('user not found', HttpStatus.NOT_FOUND);
       });
   }
@@ -47,7 +47,7 @@ export class UserService {
       .createQueryBuilder('users')
       .where('users.username = :username', { username })
       .getOneOrFail()
-      .catch((err) => {
+      .catch(() => {
         throw new HttpException('username not found', HttpStatus.NOT_FOUND);
       });
   }

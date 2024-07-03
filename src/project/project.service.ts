@@ -23,7 +23,7 @@ export class ProjectService {
       .returning('*')
       .execute();
 
-    return this.projectRepository.create(raw[0] as Object);
+    return this.projectRepository.create(raw[0] as object);
   }
 
   async findAll(userId: number): Promise<Project[]> {
@@ -44,8 +44,8 @@ export class ProjectService {
       .addOrderBy('list.position')
       .addOrderBy('task.position')
       .getOneOrFail()
-      .catch((err) => {
-        throw new NotFoundException(err);
+      .catch(() => {
+        throw new NotFoundException();
       });
   }
 
@@ -62,11 +62,11 @@ export class ProjectService {
       .andWhereInIds(id)
       .returning('id, title, description')
       .execute()
-      .catch((err) => {
+      .catch(() => {
         throw new NotFoundException();
       });
 
-    return this.projectRepository.create(raw[0] as Object);
+    return this.projectRepository.create(raw[0] as object);
   }
 
   async remove(id: number, userId: number): Promise<void> {
@@ -76,7 +76,7 @@ export class ProjectService {
       .where('ownerId = :userId', { userId })
       .andWhereInIds(id)
       .execute()
-      .catch((err) => {
+      .catch(() => {
         throw new NotFoundException();
       });
   }

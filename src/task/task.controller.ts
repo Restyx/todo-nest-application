@@ -56,7 +56,8 @@ export class TaskController {
   @Get(':id')
   @ApiOkResponse({ description: 'Задача найдена', type: Task })
   @ApiNotFoundResponse({
-    description: 'Задача или список задач с указанным id принадлежащий пользователю не найден',
+    description:
+      'Задача или список задач с указанным id принадлежащий пользователю не найден',
   })
   // @ApiForbiddenResponse({ description: 'Задача не принадлежит пользователю' })
   findOne(@Param('id') id: string, @Request() req) {
@@ -66,7 +67,8 @@ export class TaskController {
   @Patch(':id')
   @ApiOkResponse({ description: 'Задача успешно обнавлена', type: Task })
   @ApiNotFoundResponse({
-    description: 'Задача или список задач с указанным id принадлежащий пользователю не найден',
+    description:
+      'Задача или список задач с указанным id принадлежащий пользователю не найден',
   })
   // @ApiForbiddenResponse({ description: 'Задача не принадлежит пользователю' })
   update(
@@ -80,7 +82,8 @@ export class TaskController {
   @Delete(':id')
   @ApiOkResponse({ description: 'Задача успешно удалена' })
   @ApiNotFoundResponse({
-    description: 'Задача или список задач с указанным id принадлежащий пользователю не найден',
+    description:
+      'Задача или список задач с указанным id принадлежащий пользователю не найден',
   })
   // @ApiForbiddenResponse({ description: 'Задача не принадлежит пользователю' })
   remove(@Param('id') id: string, @Request() req) {

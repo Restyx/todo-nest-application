@@ -27,7 +27,7 @@ export class TaskService {
       })
       .orderBy('tasks.position', 'DESC')
       .getOneOrFail()
-      .catch((err) => {
+      .catch(() => {
         return { position: 0 };
       });
 
@@ -43,7 +43,7 @@ export class TaskService {
       .returning('*')
       .execute();
 
-    return this.taskRepository.create(raw[0] as Object);
+    return this.taskRepository.create(raw[0] as object);
   }
 
   async findAll(userId: number): Promise<Task[]> {
@@ -60,7 +60,7 @@ export class TaskService {
       .where('tasks.ownerId = :userId', { userId })
       .andWhereInIds(taskId)
       .getOneOrFail()
-      .catch((err) => {
+      .catch(() => {
         throw new NotFoundException();
       });
   }
@@ -78,11 +78,11 @@ export class TaskService {
       .andWhereInIds(taskId)
       .returning('*')
       .execute()
-      .catch((err) => {
+      .catch(() => {
         throw new NotFoundException();
       });
 
-    return this.taskRepository.create(queryResult.raw[0] as Object);
+    return this.taskRepository.create(queryResult.raw[0] as object);
   }
 
   async remove(taskId: number, userId: number): Promise<void> {
@@ -92,7 +92,7 @@ export class TaskService {
       .where('tasks.ownerId = :userId', { userId })
       .andWhereInIds(taskId)
       .execute()
-      .catch((err) => {
+      .catch(() => {
         throw new NotFoundException();
       });
   }
@@ -110,7 +110,7 @@ export class TaskService {
       .where('tasks.ownerId = :userId', { userId })
       .andWhereInIds(taskId)
       .getOneOrFail()
-      .catch((err) => {
+      .catch(() => {
         throw new NotFoundException();
       });
 

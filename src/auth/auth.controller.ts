@@ -62,7 +62,7 @@ export class AuthController {
   @ApiUnauthorizedResponse({ description: 'Невалидный Bearer токен' })
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req): Promise<{}> {
+  getProfile(@Request() req): Promise<object> {
     return req.user;
   }
 }

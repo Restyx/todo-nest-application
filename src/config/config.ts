@@ -12,6 +12,6 @@ export default () => ({
     expiresIn: process.env.JWT_EXPIRES,
   },
   bcrypt: {
-    salt: Number(process.env.BCRYPT_SALT)
-  }
+    salt: Number(process.env.BCRYPT_SALT),
+  },
 });

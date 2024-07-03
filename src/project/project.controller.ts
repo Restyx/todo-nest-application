@@ -19,7 +19,6 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
   ApiOkResponse,
-  ApiForbiddenResponse,
   ApiNotFoundResponse,
 } from '@nestjs/swagger';
 import { Project } from './entities/project.entity';

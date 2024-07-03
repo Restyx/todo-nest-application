@@ -30,7 +30,7 @@ export class ListService {
       })
       .orderBy('lists.position', 'DESC')
       .getOneOrFail()
-      .catch((err) => {
+      .catch(() => {
         return { position: 0 };
       });
 
@@ -46,7 +46,7 @@ export class ListService {
       .returning('*')
       .execute();
 
-    return this.listRepository.create(raw[0] as Object);
+    return this.listRepository.create(raw[0] as object);
   }
 
   async findAll(userId: number): Promise<List[]> {
@@ -63,7 +63,7 @@ export class ListService {
       .where('lists.ownerId = :userId', { userId })
       .andWhereInIds(listId)
       .getOneOrFail()
-      .catch((err) => {
+      .catch(() => {
         throw new NotFoundException();
       });
   }
@@ -81,11 +81,11 @@ export class ListService {
       .andWhereInIds(listId)
       .returning('*')
       .execute()
-      .catch((err) => {
+      .catch(() => {
         throw new NotFoundException();
       });
 
-    return this.listRepository.create(queryResult.raw[0] as Object);
+    return this.listRepository.create(queryResult.raw[0] as object);
   }
 
   async remove(listId: number, userId: number): Promise<void> {
@@ -95,7 +95,7 @@ export class ListService {
       .where('ownerId = :userId', { userId })
       .andWhereInIds(listId)
       .execute()
-      .catch((err) => {
+      .catch(() => {
         throw new NotFoundException();
       });
   }
@@ -114,7 +114,7 @@ export class ListService {
       .where('lists.ownerId = :userId', { userId })
       .andWhereInIds(listId)
       .getOneOrFail()
-      .catch((err) => {
+      .catch(() => {
         throw new NotFoundException();
       });
 
