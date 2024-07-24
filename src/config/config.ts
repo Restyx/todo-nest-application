@@ -1,11 +1,11 @@
 export default () => ({
   port: Number(process.env.SERVER_PORT),
   pgDatabase: {
-    host: process.env.POSTGRESQL_HOST,
-    port: Number(process.env.POSTGRESQL_PORT),
-    username: process.env.POSTGRESQL_USER,
-    password: process.env.POSTGRESQL_PASSWORD,
-    database: process.env.POSTGRESQL_DATABASE,
+    host: process.env.POSTGRES_HOST,
+    port: Number(process.env.POSTGRES_PORT),
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DB,
   },
   jwt: {
     secret: process.env.JWT_SECRET,

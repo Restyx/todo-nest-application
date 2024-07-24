@@ -1,6 +1,6 @@
 import { List } from '../../list/entities/list.entity';
 import { Entity, Column, ManyToOne, CreateDateColumn } from 'typeorm';
-import { Content } from '../../bin/entities/Content.abstract';
+import { Content } from '../../lib/entities/content.abstract';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('tasks')
