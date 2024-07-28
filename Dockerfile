@@ -12,4 +12,4 @@ COPY ./dist ./dist
 
 CMD ["npm", "run", "start:dev"]
 
-EXPOSE 30000
+EXPOSE 3000
