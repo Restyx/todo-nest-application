@@ -65,7 +65,6 @@ export class ListController {
   }
 
   @Patch(':id')
-  @Get(':id')
   @ApiOkResponse({ description: 'Список задач успешно обнавлен', type: List })
   @ApiNotFoundResponse({
     description:
