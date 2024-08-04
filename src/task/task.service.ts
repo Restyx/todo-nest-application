@@ -22,7 +22,7 @@ export class TaskService {
       .createQueryBuilder('tasks')
       .select('tasks.position')
       .where('tasks.ownerId = :userId', { userId })
-      .andWhere('tasks.projectId = :listId', {
+      .andWhere('tasks.listId = :listId', {
         listId: createTaskDto.listId,
       })
       .orderBy('tasks.position', 'DESC')
@@ -87,9 +87,9 @@ export class TaskService {
 
   async remove(taskId: number, userId: number): Promise<void> {
     await this.taskRepository
-      .createQueryBuilder('tasks')
+      .createQueryBuilder()
       .delete()
-      .where('tasks.ownerId = :userId', { userId })
+      .where('ownerId = :userId', { userId })
       .andWhereInIds(taskId)
       .execute()
       .catch(() => {
@@ -134,8 +134,8 @@ export class TaskService {
       .update(Task)
       .set({ position: () => 'position + 1' })
       .where('ownerId = :userId', { userId })
-      .andWhere('projectId = :projectId', {
-        projectId: moveTasktDto.listId,
+      .andWhere('listId = :listId', {
+        listId: moveTasktDto.listId,
       })
       .andWhere('position >= :moveTo', {
         moveTo: moveTasktDto.position,
@@ -148,9 +148,6 @@ export class TaskService {
       .update(Task)
       .set({ position: moveTasktDto.position, listId: moveTasktDto.listId })
       .where('ownerId = :userId', { userId })
-      .andWhere('listId = :listId', {
-        listId: moveTasktDto.listId,
-      })
       .andWhereInIds(taskId)
       .execute();
   }

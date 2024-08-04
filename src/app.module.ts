@@ -24,24 +24,6 @@ import { TaskModule } from './task/task.module';
       synchronize: true,
       autoLoadEntities: true,
     }),
-    // TypeOrmModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   name: 'postgres-connection',
-    //   useFactory: (configService: ConfigService) => {
-    //     return {
-    //       type: 'postgres',
-    //       host: configService.get<string>('POSTGRES_HOST'),
-    //       port: configService.get<number>('POSTGRES_PORT'),
-    //       username: configService.get<string>('POSTGRES_USER'),
-    //       password: configService.get<string>('POSTGRES_PASSWORD'),
-    //       database: configService.get<string>('POSTGRES_DB'),
-    //       entities: [],
-    //       synchronize: true,
-    //       autoLoadEntities: true,
-    //     };
-    //   },
-    //   inject: [ConfigService]
-    // }),
     UserModule,
     AuthModule,
     ProjectModule,

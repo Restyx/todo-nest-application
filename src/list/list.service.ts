@@ -152,9 +152,6 @@ export class ListService {
       .update(List)
       .set({ position: moveListDto.position, projectId: moveListDto.projectId })
       .where('ownerId = :userId', { userId })
-      .andWhere('projectId = :projectId', {
-        projectId: moveListDto.projectId,
-      })
       .andWhereInIds(listId)
       .execute();
   }
