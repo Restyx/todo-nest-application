@@ -6,10 +6,8 @@ import {
   Payload,
   RmqContext,
 } from '@nestjs/microservices';
-import { CreateUserDto } from './dto/create-user.dto';
 import { User } from '@app/shared';
-import { LoginUserDto } from './dto/login-user.dto';
-import { SharedService } from '@app/shared';
+import { SharedService, CreateUserDto, LoginUserDto } from '@app/shared';
 
 @Controller()
 export class AuthController {

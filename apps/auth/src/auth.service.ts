@@ -3,12 +3,10 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
 import { DataSource } from 'typeorm';
-import { User } from '@app/shared';
+import { User, CreateUserDto, LoginUserDto } from '@app/shared';
 import { ConfigService } from '@nestjs/config';
 import { hash, compare } from 'bcryptjs';
-import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -61,7 +59,7 @@ export class AuthService {
   }
 
   async verifyJwt(jwt: string): Promise<any> {
-    return await this.jwtService.verifyAsync(jwt).catch((err) => {
+    return await this.jwtService.verifyAsync(jwt).catch(() => {
       throw new UnauthorizedException();
     });
   }

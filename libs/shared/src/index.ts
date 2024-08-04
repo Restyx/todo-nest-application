@@ -12,6 +12,10 @@ export * from './entities/project.entity';
 export * from './entities/task.entity';
 export * from './entities/user.entity';
 // DTOs
+// user
+export * from './dto/user/create-user.dto';
+export * from './dto/user/login-user.dto';
+
 // project
 export * from './dto/project/create-project.dto';
 export * from './dto/project/update-project.dto';
