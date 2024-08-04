@@ -1,28 +1,95 @@
 services:
-  main:
-    container_name: main
-    restart: always
+  api:
+    container_name: ApiGateway
     build:
-      context: .
+      context: ./
+      dockerfile: ./apps/api/Dockerfile
     env_file:
       - .env
-    volumes:
-      - .:/app
-      - /app/node_modules
-    ports:
-      - 8080:3000
-    command: npm run start:dev
     depends_on:
-      - postgres
+      - rabbitmq
+      - auth
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - ${API_PORT}:${API_PORT}
+    command: npm run start:dev api # overrides CMD for Dockerfile
 
-  postgres:
-    container_name: postgres
-    image: postgres:16
-    restart: always
+  auth:
+    container_name: authService
+    build:
+      context: ./
+      dockerfile: ./apps/auth/Dockerfile
     env_file:
       - .env
+    depends_on:
+      - rabbitmq
+      - authpostgresdb
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run start:dev auth # overrides CMD for Dockerfile
+
+    projects:
+      container_name: projectsService
+      build:
+        context: ./
+        dockerfile: ./apps/projects/Dockerfile
+      env_file:
+        - .env
+      depends_on:
+        - rabbitmq
+        - projectspostgresdb
+      volumes:
+        - .:/usr/src/app
+        - /usr/src/app/node_modules
+      command: npm run start:dev projects # overrides CMD for Dockerfile
+
+
+  authpostgresdb:
+    image: postgres:16
+    container_name: authPostgresDB
+    hostname: ${POSTGRES_AUTH_SERVICE_HOST}
+    restart: always
     shm_size: 256mb
     environment:
+      POSTGRES_USER: ${POSTGRES_AUTH_SERVICE_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_AUTH_SERVICE_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_AUTH_SERVICE_DB}
       PG_DATA: /var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - ${POSTGRES_AUTH_SERVICE_PORT}:5432
+    # volumes:
+    #   -
+
+
+  projectspostgresdb:
+    image: postgres:16
+    container_name: projectsPostgresDB
+    hostname: ${POSTGRES_PROJECTS_SERVICE_HOST}
+    restart: always
+    shm_size: 256mb
+    environment:
+      POSTGRES_USER: ${POSTGRES_PROJECTS_SERVICE_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PROJECTS_SERVICE_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_PROJECTS_SERVICE_DB}
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - ${POSTGRES_PROJECTS_SERVICE_PORT}:5432
+
+  rabbitmq:
+    image: 'rabbitmq:3-management'
+    container_name: rabbitmq
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+    ports:
+      - '${RABBITMQ_PORT}:5672'
+      - '15672:15672'
+    volumes:
+      - 'rabbitmq_data:/data'
+
+volumes:
+  rabbitmq_data:
