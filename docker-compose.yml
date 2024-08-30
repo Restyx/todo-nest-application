@@ -10,7 +10,7 @@ services:
       - .:/app
       - /app/node_modules
     ports:
-      - ${SERVER_PORT}:3000
+      - 3000:${SERVER_PORT}
     command: npm run start:dev
     depends_on:
       - postgres
