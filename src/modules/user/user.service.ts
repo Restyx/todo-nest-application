@@ -22,7 +22,7 @@ export class UserService implements UserServiceInterface {
   public async create(data: CreateUserDto): Promise<UserEntity> {
     const { email, password } = data;
 
-    const salt = +this.configService.get<number>('BCRYPT_SALT');
+    const salt = +this.configService.get<number>('bcrypt.salt');
     const hashedPassword = await hash(password, salt);
     try {
       const user: UserEntity = await this.userRepository.save({
@@ -71,7 +71,7 @@ export class UserService implements UserServiceInterface {
 
   public async update(id: number, data: UpdateUserDto): Promise<UserEntity> {
     if (data.password) {
-      const salt = +this.configService.get<number>('BCRYPT_SALT');
+      const salt = +this.configService.get<number>('bcrypt.salt');
       data.password = await hash(data.password, salt);
     }
 

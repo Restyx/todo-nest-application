@@ -8,7 +8,7 @@ import { AppModule } from './modules/app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  const port = configService.get<number>('SERVER_PORT');
+  const port = configService.get<number>('server.port');
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   // app.setGlobalPrefix('v1');
